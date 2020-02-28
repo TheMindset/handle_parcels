@@ -5,9 +5,29 @@ const index = async (req, res) => {
     const parcels = await Parcel.findAll({
       attributes: { exclude: ['createdAt', 'updatedAt']}
     })
-    console.log(parcels.dataValues)
     res.setHeader('Content-Type', 'application/json')
     res.status(200).send(JSON.stringify({ data: parcels }))
+  } catch (error) {
+    res.status(500).send(JSON.stringify({ error: error }))
+  }
+}
+
+const show = async (req, res) => {
+  try {
+    const parcel = await Parcel.findOne({
+      attributes: { exclude: ['createdAt', 'updatedAt']},
+      where: {
+        id: req.params.id
+      }
+    })
+
+    if (parcel) {
+      res.setHeader('Content-Type', 'application/json')
+      res.status(200).send(JSON.stringify({ data: parcel }))   
+    } else {
+      res.setHeader('Content-Type', 'application/json')
+      res.status(401).send(JSON.stringify({ error: "The ID specified doesn't exists" }))
+    }
   } catch (error) {
     res.status(500).send(JSON.stringify({ error: error }))
   }
@@ -37,5 +57,5 @@ const create = async (req, res) => {
 }
 
 module.exports = {
-  index, create
+  index, create, show
 }
