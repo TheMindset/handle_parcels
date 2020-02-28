@@ -15,6 +15,7 @@ module.exports = {
           address: faker.address.streetAddress(),
           city: faker.address.city(),
           zipcode: faker.address.zipCode(),
+          price: 10,
           createdAt: new Date(),
           updatedAt: new Date()
         },
@@ -27,6 +28,7 @@ module.exports = {
           address: faker.address.streetAddress(),
           city: faker.address.city(),
           zipcode: faker.address.zipCode(),
+          price: 19,
           createdAt: new Date(),
           updatedAt: new Date()
         },
@@ -39,6 +41,7 @@ module.exports = {
           address: faker.address.streetAddress(),
           city: faker.address.city(),
           zipcode: faker.address.zipCode(),
+          price: 9,
           createdAt: new Date(),
           updatedAt: new Date()
         },
@@ -51,6 +54,7 @@ module.exports = {
           address: faker.address.streetAddress(),
           city: faker.address.city(),
           zipcode: faker.address.zipCode(),
+          price: 15,
           createdAt: new Date(),
           updatedAt: new Date()
         },
@@ -63,6 +67,7 @@ module.exports = {
           address: faker.address.streetAddress(),
           city: faker.address.city(),
           zipcode: faker.address.zipCode(),
+          price: 12,
           createdAt: new Date(),
           updatedAt: new Date()
         },
@@ -75,6 +80,7 @@ module.exports = {
           address: faker.address.streetAddress(),
           city: faker.address.city(),
           zipcode: faker.address.zipCode(),
+          price: 27,
           createdAt: new Date(),
           updatedAt: new Date()
         }
