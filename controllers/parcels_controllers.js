@@ -56,6 +56,56 @@ const create = async (req, res) => {
   }
 }
 
+const update = async (req, res) => {
+  try {
+    const parcel = await Parcel.findOne({
+      where: {
+        id: req.params.id
+      }
+    })
+
+    if (parcel) {
+      await parcel.update({
+        type: req.body.type,
+        weight: req.body.weight,
+        volume: req.body.volume,
+        recipient: req.body.recipient,
+        address: req.body.address,
+        city: req.body.city,
+        zipcode: req.body.zipcode,
+      })
+      res.setHeader('Content-type', 'application/json')
+      res.status(200).send(JSON.stringify( parcel, ['id', 'type', 'weigth', 'volume', 'recipient', 'address', 'city', 'zipcode'] ))  
+    } else {
+      res.setHeader('Content-Type', 'application/json')
+      res.status(401).send(JSON.stringify({ error: "The ID specified doesn't exists" }))
+    }
+  } catch (error) {
+    res.status(500).send(JSON.stringify({ error: error }))
+  }
+}
+
+const deletePacrel = async (req, res) => {
+  try {
+    const parcel = await Parcel.findOne({
+      where: {
+        id: req.params.id
+      }
+    })
+
+    if (parcel) {
+      await parcel.destroy()
+      res.setHeader('Content-Type', 'application/json')
+      res.status(204).send(JSON.stringify({ success: 'The parcel has been deleted' }))
+    } else {
+      res.setHeader('Content-Type', 'application/json')
+      res.status(401).send(JSON.stringify({ error: "The ID specified doesn't exists" }))
+    }
+  } catch (error) {
+    res.status(500).send(JSON.stringify({ error: error }))
+  }
+}
+
 module.exports = {
-  index, create, show
+  index, create, show, update, deletePacrel
 }

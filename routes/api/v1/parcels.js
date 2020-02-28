@@ -5,5 +5,7 @@ const parcelController = require('../../../controllers/parcels_controllers')
 router.get('/', parcelController.index)
 router.get('/:id', parcelController.show)
 router.post('/', parcelController.create)
+router.patch('/:id', parcelController.update)
+router.delete('/:id', parcelController.deletePacrel)
 
 module.exports = router
