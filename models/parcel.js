@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     recipient: DataTypes.STRING,
     address: DataTypes.STRING,
     city: DataTypes.STRING,
-    zipcode: DataTypes.STRING
+    zipcode: DataTypes.STRING,
+    price: DataTypes.INTEGER
   }, {});
   Parcel.associate = function(models) {
     // associations can be defined here
