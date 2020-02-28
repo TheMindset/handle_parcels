@@ -1,4 +1,5 @@
 const Parcel = require('../models').Parcel
+const calculate_price = require('../helpers/calculate_price')
 
 const index = async (req, res) => {
   try {
@@ -34,7 +35,6 @@ const show = async (req, res) => {
 }
 
 const create = async (req, res) => {
-  console.log(req.body)
   try {
     const parcel = await Parcel.create({
       type: req.body.type,
@@ -44,14 +44,16 @@ const create = async (req, res) => {
       address: req.body.address,
       city: req.body.city,
       zipcode: req.body.zipcode,
+      price: calculate_price(req.body.type, req.body.weight)
   })
+
     res.setHeader('Content-type', 'application/json')
-    res.status(200).send(JSON.stringify( parcel, ['id', 'type', 'weight', 'volume', 'recipient', 'address', 'city', 'zipcode'] ))
+    res.status(200).send(JSON.stringify( parcel, ['id', 'type', 'weight', 'volume', 'price', 'recipient', 'address', 'city', 'zipcode'] ))
 
   } catch (error) {
     res.setHeader('Content-type', 'application/json')
     res.status(400).send(JSON.stringify({
-      error: error.errors[0].message
+      error: error
     }))
   }
 }
@@ -73,9 +75,10 @@ const update = async (req, res) => {
         address: req.body.address,
         city: req.body.city,
         zipcode: req.body.zipcode,
+        price: calculate_price(req.body.type, req.body.weight)
       })
       res.setHeader('Content-type', 'application/json')
-      res.status(200).send(JSON.stringify( parcel, ['id', 'type', 'weigth', 'volume', 'recipient', 'address', 'city', 'zipcode'] ))  
+      res.status(200).send(JSON.stringify( parcel, ['id', 'type', 'weigth', 'volume', 'price', 'recipient', 'address', 'city', 'zipcode'] ))  
     } else {
       res.setHeader('Content-Type', 'application/json')
       res.status(401).send(JSON.stringify({ error: "The ID specified doesn't exists" }))
