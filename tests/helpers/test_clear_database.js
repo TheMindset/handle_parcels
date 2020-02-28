@@ -1,5 +1,5 @@
-const Client = require('../../models').Client
+const Parcel = require('../../models').Parcel
 
 module.exports = async function cleanup() {
-  await Client.destroy({ where: {} })
+  await Parcel.destroy({ where: {} })
 }
