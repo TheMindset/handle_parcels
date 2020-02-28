@@ -17,6 +17,7 @@ describe('Parcel endpoints', () => {
         address: faker.address.streetAddress(),
         city: faker.address.city(),
         zipcode: faker.address.zipCode(),
+        price: 10,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -28,6 +29,7 @@ describe('Parcel endpoints', () => {
         address: '11 rue marilyn monroe',
         city: 'Monroe City',
         zipcode: '00000',
+        price: 19,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -39,6 +41,7 @@ describe('Parcel endpoints', () => {
         address: faker.address.streetAddress(),
         city: faker.address.city(),
         zipcode: faker.address.zipCode(),
+        price: 7,
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -54,6 +57,7 @@ describe('Parcel endpoints', () => {
     expect(Object.keys(response.body.data[0])).toContain('type')
     expect(Object.keys(response.body.data[0])).toContain('weight')
     expect(Object.keys(response.body.data[0])).toContain('volume')
+    expect(Object.keys(response.body.data[0])).toContain('price')
     expect(Object.keys(response.body.data[0])).toContain('recipient')
     expect(Object.keys(response.body.data[0])).toContain('address')
     expect(Object.keys(response.body.data[0])).toContain('city')
@@ -62,13 +66,13 @@ describe('Parcel endpoints', () => {
 
   test('should retourn the parcel specified by ID', async () => {
     const response = await request.get('/api/v1/parcels/2')
-
     expect(response.statusCode).toBe(200)
 
     expect(response.body.data.id).toBe(2)
     expect(response.body.data.type).toBe('EXPRESS')
     expect(response.body.data.weight).toBe(2.9)
     expect(response.body.data.volume).toBe(0.4)
+    expect(response.body.data.price).toBe(19)
     expect(response.body.data.recipient).toBe('Marilyn Monroe')
     expect(response.body.data.address).toBe('11 rue marilyn monroe')
     expect(response.body.data.city).toBe('Monroe City')
@@ -79,7 +83,7 @@ describe('Parcel endpoints', () => {
     const response = await request.post('/api/v1/parcels')
     .send({
       type: 'EXPRESS',
-      weight: 2.7,
+      weight: 4.1,
       volume: 0.45,
       recipient: 'Captain America',
       address: '11 rue marvel',
@@ -89,8 +93,9 @@ describe('Parcel endpoints', () => {
     expect(response.statusCode).toBe(200)
 
     expect(response.body.type).toBe('EXPRESS')
-    expect(response.body.weight).toBe(2.7)
+    expect(response.body.weight).toBe(4.1)
     expect(response.body.volume).toBe(0.45)
+    expect(response.body.price).toBe(27)
     expect(response.body.recipient).toBe('Captain America')
     expect(response.body.address).toBe('11 rue marvel')
     expect(response.body.city).toBe('Hollywood')
