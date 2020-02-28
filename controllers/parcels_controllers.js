@@ -46,12 +46,12 @@ const create = async (req, res) => {
       zipcode: req.body.zipcode,
   })
     res.setHeader('Content-type', 'application/json')
-    res.status(200).send(JSON.stringify( parcel, ['id', 'type', 'weigth', 'volume', 'recipient', 'address', 'city', 'zipcode'] ))
+    res.status(200).send(JSON.stringify( parcel, ['id', 'type', 'weight', 'volume', 'recipient', 'address', 'city', 'zipcode'] ))
 
   } catch (error) {
     res.setHeader('Content-type', 'application/json')
     res.status(400).send(JSON.stringify({
-      error: error
+      error: error.errors[0].message
     }))
   }
 }

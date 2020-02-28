@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev-start": "nodemon ./bin/www"
+    "test": "jest --forceExit --coverage ",
+    "dev-start": "nodemon ./bin/www",
+    "oneTest": "jest --forceExit --coverage -t"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
