@@ -2,7 +2,7 @@ const Parcel = require('../../models').Parcel
 const cleanup = require('../helpers/test_clear_database')
 
 describe('Parcel Model', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     cleanup()
   })
 
@@ -15,12 +15,14 @@ describe('Parcel Model', () => {
       address: '11 rue Marvel',
       city: 'Hollywood',
       zipcode: '00000',
+      price: 19
     })
 
     expect(parcel.dataValues.type).toBe('EXPRESS')
     expect(parcel.dataValues.weight).toBe(2.4)
     expect(parcel.dataValues.volume).toBe(0.52)
     expect(parcel.dataValues.recipient).toBe('Black Panther')
+    expect(parcel.dataValues.price).toBe(19)
     expect(parcel.dataValues.address).toBe('11 rue Marvel')
     expect(parcel.dataValues.city).toBe('Hollywood')
     expect(parcel.dataValues.zipcode).toBe('00000')
