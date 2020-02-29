@@ -7,7 +7,6 @@ module.exports = {
       'price',
       {
         type: Sequelize.INTEGER,
-        allowNull: false,
       }
     );
   },

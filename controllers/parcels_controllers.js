@@ -44,11 +44,10 @@ const create = async (req, res) => {
       address: req.body.address,
       city: req.body.city,
       zipcode: req.body.zipcode,
-      price: calculate_price(req.body.type, req.body.weight)
   })
 
     res.setHeader('Content-type', 'application/json')
-    res.status(200).send(JSON.stringify( parcel, ['id', 'type', 'weight', 'volume', 'price', 'recipient', 'address', 'city', 'zipcode'] ))
+    res.status(200).send(JSON.stringify( parcel, ['id', 'type', 'weight', 'volume', 'recipient', 'address', 'city', 'zipcode'] ))
 
   } catch (error) {
     res.setHeader('Content-type', 'application/json')
@@ -75,10 +74,9 @@ const update = async (req, res) => {
         address: req.body.address,
         city: req.body.city,
         zipcode: req.body.zipcode,
-        price: calculate_price(req.body.type, req.body.weight)
       })
       res.setHeader('Content-type', 'application/json')
-      res.status(200).send(JSON.stringify( parcel, ['id', 'type', 'weigth', 'volume', 'price', 'recipient', 'address', 'city', 'zipcode'] ))  
+      res.status(200).send(JSON.stringify( parcel, ['id', 'type', 'weigth', 'volume', 'recipient', 'address', 'city', 'zipcode'] ))  
     } else {
       res.setHeader('Content-Type', 'application/json')
       res.status(401).send(JSON.stringify({ error: "The ID specified doesn't exists" }))
@@ -109,6 +107,34 @@ const deletePacrel = async (req, res) => {
   }
 }
 
+const estimatePrice = async (req, res) => {
+  try {
+    const parcel = await Parcel.findOne({
+      where: {
+        id: req.params.id
+      }
+    })
+
+    if (parcel) {
+      await parcel.update({
+        price: calculate_price(parcel.dataValues.type, parcel.dataValues.weight)
+      })
+      res.setHeader('Content-type', 'application/json')
+      res.status(200).send(JSON.stringify( parcel, ['id', 'type', 'weigth', 'volume', 'price', 'recipient', 'address', 'city', 'zipcode'] ))  
+    } else {
+      res.setHeader('Content-Type', 'application/json')
+      res.status(401).send(JSON.stringify({ error: "The ID specified doesn't exists" }))
+    }
+  } catch (error) {
+    res.status(500).send(JSON.stringify({ error: error }))
+  }
+}
+
 module.exports = {
-  index, create, show, update, deletePacrel
+  index, 
+  create, 
+  show, 
+  update, 
+  deletePacrel, 
+  estimatePrice
 }
