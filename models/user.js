@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isEmail: true,
         isUnique() {
-          return Client.findOne({ 
+          return User.findOne({ 
             where: {email: this.email}
           }).then (email => {
             if (email) {
