@@ -43,7 +43,6 @@ describe('User endpoints', () => {
       password: '123456'
     })
     expect(response.statusCode).toBe(200)
-
     expect(Object.keys(response.headers)).toContain('auth-token')
     expect(Object.keys(response.body)).toContain('token')
     expect(response.body.success).toBe('Logged in!')
