@@ -1,5 +1,6 @@
 const User = require('../models').User
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const register = async (req, res) => {
   const salt = await bcrypt.genSalt(10)
@@ -30,9 +31,13 @@ const login = async (req, res) => {
     const validPassword = await bcrypt.compare(req.body.password, user.password)
     if(!validPassword) return res.status(401).send({ error: 'Invalid Password' })
 
+    const token = jwt.sign({ id: user.id }, process.env.SECRET_TOKEN)
+
+    res.header('auth-token', token)
     res.setHeader('Content-Type', 'application/json')
-    res.status(200).send(JSON.stringify({ success: 'Logged in!' }))   
+    res.status(200).send(JSON.stringify({ success: 'Logged in!', token: token }))   
   } catch (error) {
+    res.setHeader('Content-Type', 'application/json')
     res.status(500).send(JSON.stringify({ error: error }))
   }
 }
