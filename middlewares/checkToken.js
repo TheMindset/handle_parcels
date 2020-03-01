@@ -2,7 +2,10 @@ const jwt = require('jsonwebtoken')
 
 const checkToken = (req, res, next) => {
   const token = req.header('auth-token')
-  if (!token) return res.status(401).send(JSON.stringify({ error: 'Access denied you must login before'}))
+  if (!token) {
+    res.setHeader('Content-Type', 'application/json')
+    res.status(401).send(JSON.stringify({ error: 'Access denied you must login before'})) 
+  }
 
   try {
     const verifiedToken = jwt.verify(token, process.env.SECRET_TOKEN)
